@@ -29,6 +29,7 @@
 @property (nonatomic, assign) int directionId;
 /** Array of CAPTrips */
 @property NSMutableArray *trips;
+/** When we last checked the API, not when the API last refreshed (realtime.polltime) */
 @property NSDate *lastUpdated;
 
 @property BOOL showsTrips;  // FIXME: Putting this as a property on the model seems bad

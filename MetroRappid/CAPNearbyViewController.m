@@ -324,9 +324,12 @@
             if (i >= activeStop.trips.count) break;
             CAPTrip *trip = activeStop.trips[i];
             i++;
-            if (!trip.realtime.valid) {
-                continue;
-            };
+            if (!trip.realtime.valid) continue;
+            
+            if (numAdded == 0) {
+                UILabel *lastUpdated = (UILabel *)[cell viewWithTag:120];
+                lastUpdated.text = trip.realtime.polltime;
+            }
             
             UILabel *mainTime;
             mainTime = (UILabel *)[cell viewWithTag:100 + (numAdded * 2)];
@@ -348,6 +351,7 @@
             time.text = @"";
             time.hidden = YES;
         }
+        
     }
 
     // http://stackoverflow.com/questions/19256996/uibutton-not-showing-highlight-on-tap-in-ios7
@@ -371,7 +375,7 @@
     CAPLocation *location = nextBus.location;
     CAPStop *stop = location.stops[nextBus.activeStopIndex];
     
-    if (stop.showsTrips) return 90.0f;
+    if (stop.showsTrips) return 130.0f;
     else return 60.0f;
 }
 
@@ -394,7 +398,7 @@
 }
 - (IBAction)toggleDirection:(id)sender {
     UISegmentedControl *control = (UISegmentedControl *)sender;
-    self.directionId = control.selectedSegmentIndex;
+    self.directionId = (int)control.selectedSegmentIndex;
     [self loadLocationsGTFS];
 }
 
