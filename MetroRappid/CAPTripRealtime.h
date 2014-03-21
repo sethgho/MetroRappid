@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
+#import "CAPStop.h"
 
 @interface CAPTripRealtime : NSObject <MKAnnotation> {
     CLLocationCoordinate2D coordinate;

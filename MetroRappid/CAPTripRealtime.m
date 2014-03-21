@@ -46,15 +46,23 @@
     self.estimatedTime = [NSString stringWithFormat:@"%dm", (int)components.minute];
     if (components.hour > 1) self.estimatedTime = [NSString stringWithFormat:@"%dh %dm", (int)components.hour, (int)components.minute];
     [self updateTitle];
-    
-    MKDirectionsRequest* etaRequest = [[MKDirectionsRequest alloc] init];
-    etaRequest.source = self.lat.
 }
 
 - (void)updateTitle
 {
     self.title = [NSString stringWithFormat:@"%@ Away - Vehicle %@", self.estimatedTime, self.vehicleId];
     self.subtitle = [NSString stringWithFormat:@"Location Updated %@", self.polltime];
+}
+
+- (void)etaToStop:(CAPStop *)stop
+{
+    MKDirectionsRequest* etaRequest = [[MKDirectionsRequest alloc] init];
+    MKPlacemark *sourcePlacemark = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
+    MKMapItem *sourceItem = [[MKMapItem alloc] initWithPlacemark:sourcePlacemark];
+    etaRequest.source = sourceItem;
+    MKPlacemark *destinationPlacemark = [[MKPlacemark alloc] initWithCoordinate:stop.coordinate addressDictionary:nil];
+    MKMapItem *destinationItem = [[MKMapItem alloc] initWithPlacemark:destinationPlacemark];
+    etaRequest.destination = destinationItem;
 }
 
 - (NSString *)description
